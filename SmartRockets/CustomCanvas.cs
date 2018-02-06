@@ -12,8 +12,8 @@ namespace SmartRockets
 
         public CustomCanvas()
         {
-            Height = 700;
-            Width = 1000;
+            Height = 600;
+            Width = 600;
             ClipToBounds = true;
             visualObjects = new List<Visual>();
         }

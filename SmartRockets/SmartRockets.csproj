@@ -57,6 +57,7 @@
     <Compile Include="DNA.cs" />
     <Compile Include="Population.cs" />
     <Compile Include="Rocket.cs" />
+    <Compile Include="Target.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

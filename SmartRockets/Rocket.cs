@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 
@@ -13,12 +13,15 @@ namespace SmartRockets
         private Vector velocityVector;
         private Vector accelerationVector;
 
-        private int lifetime;
-        private DNA dNA;
+        public DNA DNA { get; private set; }
+        public double Fitnes;
 
-        public Rocket()
+        private bool success;
+        private bool failed;
+
+        public Rocket(DNA dNA = null)
         {
-            size = new Size(10, 40);
+            size = new Size(5, 20);
             backgroundBrush = new SolidColorBrush(Color.FromArgb(200, 0, 0, 0));
 
             positionVector = new Vector(
@@ -29,21 +32,30 @@ namespace SmartRockets
 
             accelerationVector = new Vector();
 
-            dNA = new DNA(200);
+            DNA = dNA ?? new DNA(Population.MaxLifeTime);
 
             this.AddToCanvas();
         }
 
-        public void Update()
+        public void Update(int currentLifeTime)
         {
-            if (lifetime == dNA.Count)
+            if (Vector.Subtract(Target.MyTarget.Position, positionVector).Length < 10)
             {
+                success = true;
                 return;
             }
-            accelerationVector = Vector.Add(accelerationVector, dNA[lifetime++]);
 
+            if (Wall.Walls.Any(x => this.IsTouching(x)))
+            {
+                failed = true;
+                return;
+            }
+
+            accelerationVector = Vector.Add(accelerationVector, DNA[currentLifeTime]);
+            accelerationVector = Vector.Multiply(accelerationVector, 0.1);
 
             velocityVector = Vector.Add(velocityVector, accelerationVector);
+
             positionVector = Vector.Add(positionVector, velocityVector);
 
             accelerationVector = Vector.Multiply(accelerationVector, 0);
@@ -60,30 +72,12 @@ namespace SmartRockets
                 render.DrawRectangle(backgroundBrush, null, new Rect(0, 0, size.Width, size.Height));
             }
         }
+
+        public void CalculateFitnes()
+        {
+            Fitnes = 1 / Vector.Subtract(Target.MyTarget.Position, positionVector).Length;
+            if (success) { Fitnes *= 10; }
+            if (failed) { Fitnes /= 10; }
+        }
     }
 }
-
-
-
-
-/*
-private bool CheckBoundary()
-{
-    if (positionVector.X >= DrawingTools.RightBoundary
-        || positionVector.X <= DrawingTools.TopBoundary
-        || positionVector.Y >= DrawingTools.BottomBoundary
-        || positionVector.Y <= DrawingTools.LeftBoundary)
-    {
-        alive = false;
-        this.RemoveFromCanvas();
-    }
-    return alive;
-}
-
-private void Draw_Update_Helper(Action action)
-{
-    if (!alive) { return; }
-    if (!CheckBoundary()) { return; }
-    action?.Invoke();
-}
-*/
