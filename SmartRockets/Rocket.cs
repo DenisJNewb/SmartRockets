@@ -8,6 +8,7 @@ namespace SmartRockets
     {
         private Size size;
         private Brush backgroundBrush;
+        public Rect Rect { get; private set; }
 
         private Vector positionVector;
         private Vector velocityVector;
@@ -69,7 +70,10 @@ namespace SmartRockets
                 render.PushTransform(transition);
                 var rotation = new RotateTransform(Vector.AngleBetween(new Vector(0, -1), velocityVector));
                 render.PushTransform(rotation);
-                render.DrawRectangle(backgroundBrush, null, new Rect(0, 0, size.Width, size.Height));
+
+                Rect = new Rect(0, 0, size.Width, size.Height);
+
+                render.DrawRectangle(backgroundBrush, null, Rect);
             }
         }
 

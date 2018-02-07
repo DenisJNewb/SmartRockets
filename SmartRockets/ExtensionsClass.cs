@@ -21,10 +21,7 @@ namespace SmartRockets
         //TODO: REALY SLOW!!!
         public static bool IsTouching(this DrawingVisual visual, DrawingVisual visual2)
         {
-            return
-                visual.Drawing?.Children?.First()?.Bounds is Rect rect1
-                && visual2.Drawing?.Children?.First()?.Bounds is Rect rect2
-                && rect1.IntersectsWith(rect2);
+            return false;
         }
 
         public static T PickRandom<T>(this List<T> list)
