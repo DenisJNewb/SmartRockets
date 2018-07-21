@@ -32,11 +32,9 @@ namespace SmartRockets
 
         private void MyCanvas_Loaded(object sender, RoutedEventArgs e)
         {
-            var vObject = new VisualObjects.VisualObject();
-            vObject.Show();
-            //Target.MyTarget.Show();
-            //Wall.ShowWalls();
-            //var pop = new Population(); pop.GrowNew();
+            Target.MyTarget.Show();
+            Wall.ShowWalls();
+            var pop = new Population(); pop.GrowNew();
         }
     }
 }

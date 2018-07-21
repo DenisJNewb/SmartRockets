@@ -58,7 +58,6 @@
     <Compile Include="Population.cs" />
     <Compile Include="Rocket.cs" />
     <Compile Include="Target.cs" />
-    <Compile Include="VisualObjects\VisualObject.cs" />
     <Compile Include="Wall.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

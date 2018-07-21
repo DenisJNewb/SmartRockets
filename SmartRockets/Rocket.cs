@@ -40,6 +40,11 @@ namespace SmartRockets
 
         public void Update(int currentLifeTime)
         {
+            if (failed || success)
+            {
+                return;
+            }
+
             if (Vector.Subtract(Target.MyTarget.Position, positionVector).Length < 10)
             {
                 success = true;
